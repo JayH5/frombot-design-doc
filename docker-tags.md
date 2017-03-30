@@ -21,17 +21,28 @@ In git-land we usually don't move tags about, but in Docker-land it's pretty com
 
 We need some way to trigger a rebuild of an image if the image its `FROM` tag points to changes.
 
-## Why not use _immutable_ tags?
-Some people do use immutable tags. For example, it would be possible to tag images with the git sha that the image was created from:
+## Why not use tags that _don't_ change?
+Some people do do this. For example, it would be possible to tag images with the git sha that the image was created from:
+```dockerfile
+FROM praekeltfoundation/vumi:06fe87c79bc0ea8ada5f8048dac5b4a6895314ea
 ```
-praekeltfoundation/vumi:06fe87c79bc0ea8ada5f8048dac5b4a6895314ea
+or perhaps...
+```dockerfile
+FROM praekeltfoundation/vumi:0.6.13-06fe87c
+```
+or even doing something like Debian packaging and adding the build number...
+```dockerfile
+FROM praekeltfoundation/vumi:0.6.13-2
 ```
 
-This would work for our images but has a couple of problems:
- 1. It's not very user-friendly. We lose the Vumi version information.
+This would work for our images but has a few problems:
+ 1. It's not very user-friendly. Where does that hash come from? What does it mean? The tag then includes version information for both the source software and the Dockerfile. Which is which?
+ 2. In the third case, keeping track of a (useful) build number in an external CI service can be tricky.
  2. It doesn't work for images that _aren't_ tagged this way (e.g. the `python` image).
 
-Another way to do things might be to always use the full digest in the `FROM` declaration:
+> Note that I'm not saying that these are ways of tagging an image that should **never** be used-- in fact I think they have their places. But they don't solve the underlying problem we have here.
+
+Another way to do things might be to always use the image digest:
 ```dockerfile
 FROM python:2.7.13-slim@sha256:ca74abc54d21a6f1f16aaa483b931fe2f536eff5b9b5e77856c61173969605d2
 ```
@@ -42,4 +53,4 @@ FROM python@sha256:ca74abc54d21a6f1f16aaa483b931fe2f536eff5b9b5e77856c6117396960
 
 In the first case, the `:2.7.13-slim` tag part is actually ignored by Docker and it just uses the digest hash-- so the tag is fairly meaningless. :-/
 
-Whether the Docker tags are mutable or immutable, the repo that defines the Dockerfile still needs to be updated in some way so as to trigger a new build. This should be automated.
+Whether the Docker tags are moving targets or not, the repo that defines the Dockerfile still needs to be updated in some way so as to trigger a new build and doing this manually is a pain.
