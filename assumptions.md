@@ -11,6 +11,8 @@ Some examples of our Dockerfile repos:
 * [`praekeltfoundation/docker-django-bootstrap`](https://github.com/praekeltfoundation/docker-django-bootstrap)
 * [`praekeltfoundation/docker-junebug`](https://github.com/praekeltfoundation/docker-junebug)
 
+Ideally, the Dockerfile repo accurately describes everything about the Docker image that is produced from it. Building the Docker image from the repo can be reproduced reliably.
+
 ## Continuous Integration
 We assume that Docker images will be built and pushed to a registry by some form of Continuous Integration (CI). In our case this is [Travis CI](https://travis-ci.org), but this system should apply to any _general-purpose_ CI service, such as [Semaphore](https://semaphoreci.com) or [CircleCI](https://circleci.com).
 
