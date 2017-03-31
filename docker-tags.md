@@ -80,3 +80,12 @@ Additionally, the image is either tagged with the variant or the tag `latest` if
 For an example of this, see the tags for [Python official image](https://hub.docker.com/r/library/python/).
 
 Our [docker-ci-deploy](https://github.com/praekeltfoundation/docker-ci-deploy) tool uses this versioning convention when the `--tag-semver` option is used.
+
+### Tracking versioned tags
+It's not always clear which version tag is best to use. For instance, if I want to use Python 3, should I use the `python:3`, `python:3.6`, or `python:3.6.1` tag?
+
+None of the Python 3 image tags are guaranteed to be fixed. So even `python:3.6.1` will get you a different image depending on when you pulled the image from Docker Hub.
+
+In most cases it probably makes sense to track the `python:3.6` tag. If the project follows proper semantic versioning practices, then a patch-level change shouldn't have any breaking changes.
+
+But in some cases it may be desirable to include the patch version for the sake of visibility. In that case, it would be desirable to keep the tag up-to-date, so that if the `python:3.6.1` tag _tracks_ the `python:3.6` tag then it is eventually updated to `python:3.6.2` when that version of Python is released.
