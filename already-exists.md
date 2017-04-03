@@ -40,3 +40,19 @@ As mentioned in the [assumptions section](assumptions.md), we're not looking at 
 [Remote Build Triggers](https://docs.docker.com/docker-hub/builds/#remote-build-triggers) are basically webhooks you can use to trigger the Docker Hub build. You send a `POST` request with a bit of JSON that can specify things like Docker tag or Git branch or tag to build.
 
 This is perhaps what the MicroBadger people had in mind when designing their notification system.
+
+### Webhooks
+It's possible to have Docker Hub call a [webhook](https://docs.docker.com/docker-hub/webhooks/) when an event around an automated build occurs. This may be useful for triggering a build somewhere outside Docker Hub or a redeploy of an updated image.
+
+## Other solutions
+[Here](http://stackoverflow.com/questions/26423515/how-to-automatically-update-your-docker-containers-if-base-images-are-updated) is a StackOverflow discussion covering roughly the problem we're trying to solve, although most people seem to be more focussed on the problem of ensuring a _running_ container is using the latest version of its image. For now, we're just concerned with keeping images up-to-date, not containers.
+
+The solutions people propose include:
+* Bash scripts that periodically pull the latest image (don't seem to be solutions to actually _building_ images)
+* Running `unattended-upgrade` in a cron job in the containers so that they stay up-to-date (_not_ something we want to do)
+* Using Docker Hub's automated build features
+* _Such a tool would be good to have, but there's nothing that I know of that will do this._
+* Docker Hub webhooks with IFTTT
+* MicroBadger (suggested by a MicroBadger developer)
+
+Ultimately, none of these solutions really solve what we're trying to solve here.
