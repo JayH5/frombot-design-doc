@@ -5,7 +5,7 @@ Design document for "frombot"
 1. [Why it's important to track `FROM` tags](why.md)
 2. [Assumptions](assumptions.md)
 3. [About Docker tags](docker-tags.md)
-4. What already exists
+4. [What already exists](already-exists.md)
 5. Complications:
    1. How to record specific tag hashes
    2. Tracking "semantic version" tags
