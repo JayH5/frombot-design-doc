@@ -26,3 +26,17 @@ This system _could_ be used to implement the system we're talking about but ther
 * It is quite a manual process setting up these notifications in the MicroBadger UI.
 * _You can set up notifications for one base image for free. If you'd like additional notifications please apply for our private beta._
 * Notifications won't update the Git repo for your Dockerfile.
+
+## Docker Hub automated builds
+As mentioned in the [assumptions section](assumptions.md), we're not looking at using Docker Hub automated builds. Still, there are some tools here for automating image builds which are of interest.
+
+### Repository links
+[Repository links](https://docs.docker.com/docker-hub/builds/#repository-links) make it possible to _link_ one or more Docker images in Docker Hub to your image. When one of the linked images is updated, a new build of your image is triggered. This is pretty much what we want for our system except within the Docker Hub system which means:
+* No notification of when these new builds happen
+* No updates to the Git repo that defines the Docker image
+* All the other issues with Docker Hub: no notifications of failed builds, limited tag flexibility, no tests...
+
+### Build triggers
+[Remote Build Triggers](https://docs.docker.com/docker-hub/builds/#remote-build-triggers) are basically webhooks you can use to trigger the Docker Hub build. You send a `POST` request with a bit of JSON that can specify things like Docker tag or Git branch or tag to build.
+
+This is perhaps what the MicroBadger people had in mind when designing their notification system.
