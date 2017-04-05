@@ -67,3 +67,10 @@ Still, it may be worth looking at the build system that has been developed. This
 Generally, some script will be used to generate these library definition files. For example, in the `docker-library/python` repository that defines the official Python images, [here](https://github.com/docker-library/python/blob/master/generate-stackbrew-library.sh).
 
 Unfortunately, this doesn't solve the problem of `FROM` tags pointing to moving targets. So the resulting image is not guaranteed to be the same between builds (or even guaranteed to build). Images will only be updated when they are rebuilt. So, for example, the Python images will only receive an updated Debian (or Alpine Linux) base image when they are rebuilt for some reason (unless somebody manually rebuilds them for this purpose).
+
+### `repo-info`
+There is another repository in the `docker-library` Github organisation called [`repo-info`](https://github.com/docker-library/repo-info). This repo is currently not well-documented and is described as _"a firm Work In Progress"_. The repo is meant to track "extended information" about the official images such as image size, license information, tag digests, and more.
+
+It's not clear how all this works. It involves a Perl script, run inside a Docker container in what seems to be a scheduled Jenkins build. The output seems to be a lot of Markdown files. Still, this may be a useful reference as the scripts pick up a lot of information about Docker images both locally and from a registry.
+
+This system doesn't seem to be an attempt to keep images up-to-date, just to keep a collection of information _about_ the official images up-to-date.
