@@ -57,6 +57,47 @@ LABEL io.frombot.from-digest sha256:ca74abc54d21a6f1f16aaa483b931fe2f536eff5b9b5
 * Digest not enforced by Docker itself
 * Still a bit magic
 
+## Build arguments in the `FROM` tag
+A [new feature](https://github.com/moby/moby/pull/31352) in Docker Engine 17.05.0 is support for [build arguments](https://docs.docker.com/engine/reference/builder/#arg) in the `FROM` tag. This means you could write a Dockerfile like this:
+```Dockerfile
+ARG FROM_TAG
+FROM python:$FROM_TAG
+RUN ...
+```
+
+And then build the image using a command like:
+```
+> $ docker build --tag myimage --build-arg FROM_TAG=sha256:adeb26c124912b3685cc69697d00ce1f71a3b6cb86b744dc75c324267b47caea .
+```
+
+If the build argument is not provided, though, things will break. A way to work around this could be to do something like this:
+```Dockerfile
+ARG FROM_DIGEST
+FROM python:3.6${FROM_DIGEST:+@$FROM_DIGEST}
+RUN ...
+```
+
+Doing `${FROM_DIGEST:+@$FROM_DIGEST}` means that the digest is only added if it has been set, and we add the `@` necessary for the syntax. If the digest is not specified, the existing tag, `3.6`, is used.
+
+_Or_ we could even do _both_:
+```Dockerfile
+ARG FROM_TAG=3.6
+ARG FROM_DIGEST
+FROM python${FROM_TAG:+:$FROM_TAG}${FROM_DIGEST:+@$FROM_DIGEST}
+RUN ...
+```
+
+### Advantages:
+* Docker enforces the digest
+* Can work with or without the build argument(s) being specified
+* Preserve tag information
+
+### Disadvantages:
+* Does require changes to Dockerfiles
+* Digest information not in Dockerfile itself
+* Requires Docker 17.05.0+. As of writing there hasn't been a release in the "stable" channel with this functionality (should be 17.06 when this happens)
+* The `ARG` defaulting is kind of verbose and ugly
+
 ## Digest in a "lockfile"
 It could be possible to store digest hashes in a sort of makeshift lockfile, like those used by some package managers ([Bundler's](http://bundler.io) `Gemfile.lock` comes to mind).
 
