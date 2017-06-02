@@ -25,6 +25,8 @@ The main problem with this is that the Docker builder will ignore the tag part o
 ## Digest in a "metadata" comment
 It could be possible just to add a comment to the Dockerfile with the image digest. This wouldn't be picked up by Docker itself, but a separate tool could. Most importantly, the Git repository would track the digest of the `FROM` tag.
 
+The comment could be parsed by a small command line tool. The tool would then make sure that the image with the given digest is pulled before the build is run.
+
 Something like:
 ```dockerfile
 # frombot: sha256:ca74abc54d21a6f1f16aaa483b931fe2f536eff5b9b5e77856c61173969605d2
