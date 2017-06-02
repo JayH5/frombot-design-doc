@@ -95,7 +95,7 @@ RUN ...
 ### Disadvantages:
 * Does require changes to Dockerfiles
 * Digest information not in Dockerfile itself
-* Requires Docker 17.05.0+. As of writing there hasn't been a release in the "stable" channel with this functionality (should be 17.06 when this happens)
+* Requires Docker 17.05.0+. As of writing there hasn't been a release in the "stable" channel with this functionality (first stable release with this functionality should be 17.07)
 * The `ARG` defaulting is kind of verbose and ugly
 
 ## Digest in a "lockfile"
