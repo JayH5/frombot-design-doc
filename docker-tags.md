@@ -79,6 +79,8 @@ Additionally, the image is either tagged with the variant or the tag `latest` if
 
 For an example of this, see the tags for [Python official image](https://hub.docker.com/r/library/python/).
 
+This versioning system is described in the repository for the Docker official images [here](https://github.com/docker-library/official-images#tags-and-aliases).
+
 Our [docker-ci-deploy](https://github.com/praekeltfoundation/docker-ci-deploy) tool uses this versioning convention when the `--tag-semver` option is used.
 
 ### Tracking versioned tags
