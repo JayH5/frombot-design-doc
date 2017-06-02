@@ -7,7 +7,7 @@ Design document for "frombot"
 3. [About Docker tags](docker-tags.md)
 4. [What already exists](already-exists.md)
 6. Potential solutions:
-   1. [How to track image digests](track-digests.md)
+   1. [How to specify image digests](specifying-digests.md)
    2. Badges: Dockerfile and image
 7. Minimum viable product
 8. Technical problems:
