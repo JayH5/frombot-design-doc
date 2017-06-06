@@ -23,7 +23,7 @@ The main problem with this is that the Docker builder will ignore the tag part o
 * A bit clunky.
 
 ## Digest in a "metadata" comment
-It could be possible just to add a comment to the Dockerfile with the image digest. This wouldn't be picked up by Docker itself, but a separate tool could. Most importantly, the Git repository would track the digest of the `FROM` tag.
+It could be possible just to add a comment to the Dockerfile with the image digest. This wouldn't be picked up by Docker itself, but a separate tool could. Most importantly, the digest of the `FROM` tag is tracked in the Git repo.
 
 The comment could be parsed by a small command line tool. The tool would then make sure that the image with the given digest is pulled before the build is run.
 
